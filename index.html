@@ -7,105 +7,428 @@
     <link rel="stylesheet" href="https://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="application/javascript" src="fastclick.js"></script>
+    <script type="application/javascript">
+        window.addEventListener("load", function () {
+            FastClick.attach(document.body);
+        }, false);
+    </script>
     <title>青岛市贸促会2017年出国（境）展览会计划</title>
 </head>
+<style>
+    body {
+        font-size: 100%;
+    }
+    a {
+        text-decoration: none;
+    }
+    dl {
+        clear: left;
+        margin-top: 4%;
+        margin-bottom:0;
+        padding-left: 2%;
+    }
+    dd{
+        padding-left: 40%;
+    }
+
+    dt {
+        float: left;
+    }
+    .telephone{
+        border: solid 1px black;
+    }
+    .dropdown-toggle{
+        text-align: center;
+        height: 70px;
+        font-size: 200%;
+        vertical-align: middle;
+    }
+
+    #myTabContent{
+        padding-top: 2%;
+    }
+    .dropdown-menu{
+        min-width:0
+    }
+    .dropdown-menu li{
+        position: relative;
+    }
+
+    body{
+        background-color:#f1f1f1;
+    }
+    .tab-panel li{
+        height: 15%;
+        background-color: #616975;
+        background-image: -webkit-gradient(linear, left top, left bottom, from(rgb(114, 122, 134)),to(rgb(80, 88, 100)));
+        background-image: -webkit-linear-gradient(top, rgb(114, 122, 134), rgb(80, 88, 100));
+        background-image: -moz-linear-gradient(top, rgb(114, 122, 134), rgb(80, 88, 100));
+        background-image: -o-linear-gradient(top, rgb(114, 122, 134), rgb(80, 88, 100));
+        background-image: -ms-linear-gradient(top, rgb(114, 122, 134), rgb(80, 88, 100));
+        background-image: linear-gradient(top, rgb(114, 122, 134), rgb(80, 88, 100));
+        filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='#727a86', EndColorStr='#505864');
+        border-bottom: 1px solid #33373d;
+        -webkit-box-shadow: inset 0px 1px 0px 0px #878e98;
+        -moz-box-shadow: inset 0px 1px 0px 0px #878e98;
+        box-shadow: inset 0px 1px 0px 0px #878e98;
+        width: 100%;
+        line-height: 300%;
+        text-indent: 2.75em;
+        display: block;
+        position: relative;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-weight: 600;
+        color: #fff;
+        text-shadow: 0px 1px 0px rgba(0,0,0,.5);
+    }
+
+    .tab-panel div{
+        background: #fff;
+        border-bottom: 1px solid #efeff0;
+        width: 100%;
+        line-height: 2.75em;
+        display: block;
+        position: relative;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-size: 0.923em;
+        font-weight: 400;
+        color: #878d95;
+    }
+    .tab-content div:last-child{
+        border-bottom: 1px solid #33373d;
+    }
+
+</style>
 <script>
-    window.onload = function() {
-        for (i =1;i<=12;i++)
-        {
-            var datelist =document.getElementById('dateList');
-            var html =datelist.innerHTML;
-            datelist.innerHTML=html+"<li><a href=&quot;#month"+i+"&quot; tabindex=&quot;-1&quot; data-toggle=&quot;tab&quot;>"+i+"月</a></li>"
-        }
+    var classArray = [];
+    var placeArray = [];
+    var j;
+    var isClassExist = 0;
+    var isPlaceExist = 0;
+    var isDateExist = 0;
+    flag=true;
+    openFlag=-1;
+    var telArray={"刘泉":"0532-83898230","孙建明":"0532-83867032","冯越赛":"0532-83861127","沈纪东":"0532-83892360","管晓华":"0532-83892371","王克任":"0532-83892372","郑伟":"0532-83897595"};
+    window.onload = function () {
         $.getJSON("data.json", function (jsonData) {
-//        console.log(jsonData);
             for (i = 0; i < jsonData.length; i++) {
+                for (j = 0; j < classArray.length; j++) {
+                    if (jsonData[i]["类别"] == classArray[j])
+                        break;
 
+                }
+                if (j == classArray.length) {
+                    classArray.push(jsonData[i]["类别"]);
+                }
+            }
+            for (i = 0; i < jsonData.length; i++) {
+                for (j = 0; j < placeArray.length; j++) {
+                    if (jsonData[i]["地点"].indexOf("<br", 0) > 0) {
+                        if (jsonData[i]["地点"].substr(0, jsonData[i]["地点"].indexOf("<br", 0)) == placeArray[j])
+                            break;
+                    }
 
+                    else {
+                        if (jsonData[i]["地点"] == placeArray[j])
+                            break;
+                    }
+                }
+                if (j == placeArray.length) {
 
+                    if (jsonData[i]["地点"].indexOf("<br", 0) > 0)
+                        placeArray.push(jsonData[i]["地点"].substr(0, jsonData[i]["地点"].indexOf("<br", 0)));
+                    else
+                        placeArray.push(jsonData[i]["地点"]);
 
-
-
-                var oDiv = document.createElement('div');
-                oDiv.id = "month" + i;
-                oDiv.innerHTML = jsonData[i]["展会名称"];
-                document.body.appendChild(oDiv);
-                var testdiv = document.getElementById("testdiv");
-                testdiv.innerHTML="<p>I inserted <em>this</em> content.</p>"+jsonData[i]["展会名称"];
+                }
             }
         });
+        $("#class").click(function () {
+            if (isClassExist == 0) {
+                for (i = 0; i < classArray.length; i++) {
+                    var classList = document.getElementById('classlist');
+                    var html = classList.innerHTML;
+                    classList.innerHTML = html + "<li><a href='#class" + i + "'id='classlist"+i+"' tabindex='-1' data-toggle='tab'>" + classArray[i] + "</a></li>"
+                }
+                isClassExist = 1;
+            }
+        })
+
+        $("#date").click(function () {
+            if (isDateExist == 0) {
+                for (i = 1; i <= 12; i++) {
+                    var dateList = document.getElementById('datelist');
+                    var html = dateList.innerHTML;
+                    dateList.innerHTML = html + "<li><a href='#month" + i + "'; id='monthlist"+i+"' tabindex='-1'; data-toggle='tab'>" + i + "月</a></li>"
+                }
+                isDateExist = 1;
+            }
+
+        })
+
+        $("#place").click(function () {
+            if (isPlaceExist == 0) {
+                for (i = 0; i < placeArray.length; i++) {
+                    var placeList = document.getElementById('placelist');
+                    var html = placeList.innerHTML;
+                    placeList.innerHTML = html + "<li><a href='#place" + i + "'; id='placelist" + i + "' tabindex=&quot;-1&quot; data-toggle=&quot;tab&quot;>" + placeArray[i] + "</a></li>"
+                }
+                isPlaceExist = 1;
+            }
+        })
+
+        $.getJSON("data.json", function (jsonData) {
+            var placeListItem = document.getElementById('myTabContent');
+            placeListItem.innerHTML="";
+            for (i = 0; i < jsonData.length; i++) {
+                var country;
+                var city;
+                if (jsonData[i]["地点"].indexOf("<br", 0) > 0) {
+                    country = jsonData[i]["地点"].substr(0, jsonData[i]["地点"].indexOf("<br", 0));
+                    city = jsonData[i]["地点"].substr(jsonData[i]["地点"].indexOf("<br", 0) + 4, jsonData[i]["地点"].length - jsonData[i]["地点"].indexOf("<br", 0) - 4);
+                }
+                else {
+                    country = jsonData[i]["地点"];
+                    city = "";
+                }
+                    contact="";
+                    if (jsonData[i]["联系人"].indexOf("<br", 0) > 0)   //2
+                    {
+                        var firstCon=jsonData[i]["联系人"].substr(0, jsonData[i]["联系人"].indexOf("<br", 0));
+                        var firstTel=telArray[firstCon];
+                        var secCon= jsonData[i]["联系人"].substr(jsonData[i]["联系人"].indexOf("<br", 0) + 4, jsonData[i]["联系人"].length - jsonData[i]["联系人"].indexOf("<br", 0) - 4);
+                        var secTel=telArray[secCon];
+                        contact=firstCon+"<div id='telephonef"+i+"'><div style='display:block'>"+firstTel+"</div>拨号 </div><br>";
+                        contact=contact+secCon+"<div id='telephone"+i+"'><div style='display:block'>"+secTel+"</div>拨号 </div><br>";
+                    }else {         //1
+                        var oneCon=jsonData[i]["联系人"];
+                        var oneTel=telArray[oneCon];
+                        contact=oneCon+"<div id='telephone"+i+"'><div style='display:block'>"+oneTel+"</div>拨号 </div><br>";
+                    }
+                    var html = placeListItem.innerHTML;
+                    var short;
+                    if (jsonData[i]["展会名称"].indexOf("<br", 0) > 0)
+                        short = jsonData[i]["展会名称"].substr(0, jsonData[i]["展会名称"].indexOf("<br", 0));
+                    else
+                        short = jsonData[i]["展会名称"];
+                    placeListItem.innerHTML = html + "<div class='tab-panel'" + "  id=" + " place" + i + "> <li id='placeli"+i+"' >" + short + "<br></li> <div id='placediv"+i+"' style='display: none;'> <dl> <dt>展会名称:</dt><dd>" + jsonData[i]["展会名称"] + "</dd> </dl> <dl> <dt>时间:</dt><dd>" + jsonData[i]["时间"] + "</dd> </dl> <dl> <dt>国家:</dt> <dd>" + country + "</dd> </dl> <dl> <dt>城市:</dt> <dd>" + city + "</dd> </dl> <dl> <dt>联系人:</dt> <dd>" +contact + "</dd> </dl> </div> </div>";
+            }
+        });
+        $("#placeli4").click(function(){
+            alert("sdfsdf");
+        });
+
+
+    };
+</script>
+<script>
+    function show_element(e) {
+        if (!e) {
+            var e = window.event;
+        }
+        //获取事件点击元素
+        var targ = e.target;
+        //获取元素名称
+        var tname = targ.id;
+        var contact;
+        if (tname.substr(0, 9) == "placelist") {
+            var clickId = tname.substr(9, tname.length - 9);
+//            alert(clickId);
+//            alert(clickId);
+            var aimPlace = placeArray[clickId];
+            $.getJSON("data.json", function (jsonData) {
+                var placeListItem = document.getElementById('myTabContent');
+                placeListItem.innerHTML="";
+                for (i = 0; i < jsonData.length; i++) {
+                    var country;
+                    var city;
+                    if (jsonData[i]["地点"].indexOf("<br", 0) > 0) {
+                        country = jsonData[i]["地点"].substr(0, jsonData[i]["地点"].indexOf("<br", 0));
+                        city = jsonData[i]["地点"].substr(jsonData[i]["地点"].indexOf("<br", 0) + 4, jsonData[i]["地点"].length - jsonData[i]["地点"].indexOf("<br", 0) - 4);
+                    }
+                    else {
+                        country = jsonData[i]["地点"];
+                        city = "";
+                    }
+                    if (country == aimPlace) {
+                        contact="";
+                        if (jsonData[i]["联系人"].indexOf("<br", 0) > 0)   //2
+                        {
+                            var firstCon=jsonData[i]["联系人"].substr(0, jsonData[i]["联系人"].indexOf("<br", 0));
+                            var firstTel=telArray[firstCon];
+                            var secCon= jsonData[i]["联系人"].substr(jsonData[i]["联系人"].indexOf("<br", 0) + 4, jsonData[i]["联系人"].length - jsonData[i]["联系人"].indexOf("<br", 0) - 4);
+                            var secTel=telArray[secCon];
+                            contact=firstCon+"<div id='telephonef"+i+"'><div style='display:block'>"+firstTel+"</div>拨号 </div><br>";
+                            contact=contact+secCon+"<div id='telephone"+i+"'><div style='display:block'>"+secTel+"</div>拨号 </div><br>";
+                        }else {         //1
+                            var oneCon=jsonData[i]["联系人"];
+                            var oneTel=telArray[oneCon];
+                            contact=oneCon+"<div id='telephone"+i+"'><div style='display:block'>"+oneTel+"</div>拨号 </div><br>";
+                        }
+
+                        var html = placeListItem.innerHTML;
+                        var short;
+                        if (jsonData[i]["展会名称"].indexOf("<br", 0) > 0)
+                            short = jsonData[i]["展会名称"].substr(0, jsonData[i]["展会名称"].indexOf("<br", 0));
+                        else
+                            short = jsonData[i]["展会名称"];
+                        placeListItem.innerHTML = html + "<div class='tab-panel'" + "  id=" + " place" + i + "> <li id='placeli"+i+"' >" + short + "<br></li> <div id='placediv"+i+"' style='display: none;'> <dl> <dt>展会名称:</dt><dd>" + jsonData[i]["展会名称"] + "</dd> </dl> <dl> <dt>时间:</dt><dd>" + jsonData[i]["时间"] + "</dd> </dl> <dl> <dt>国家:</dt> <dd>" + country + "</dd> </dl> <dl> <dt>城市:</dt> <dd>" + city + "</dd> </dl> <dl> <dt>联系人:</dt> <dd>" +contact + "</dd> </dl> </div> </div>";
+
+                    }
+                }
+            });
+        }else if(tname.substr(0, 9) == "monthlist")
+        {
+            var clickId = tname.substr(9, tname.length - 9);
+//            alert(clickId);
+            var aimMonth = clickId;
+            $.getJSON("data.json", function (jsonData) {
+                var placeListItem = document.getElementById('myTabContent');
+                placeListItem.innerHTML="";
+                for (i = 0; i < jsonData.length; i++) {
+                    console.log(jsonData[i]["时间"].substr(0,1));
+                    if(jsonData[i]["时间"].substr(0,2)==aimMonth+"月"){
+                        contact="";
+                        if (jsonData[i]["联系人"].indexOf("<br", 0) > 0)   //2
+                        {
+                            var firstCon=jsonData[i]["联系人"].substr(0, jsonData[i]["联系人"].indexOf("<br", 0));
+                            var firstTel=telArray[firstCon];
+                            var secCon= jsonData[i]["联系人"].substr(jsonData[i]["联系人"].indexOf("<br", 0) + 4, jsonData[i]["联系人"].length - jsonData[i]["联系人"].indexOf("<br", 0) - 4);
+                            var secTel=telArray[secCon];
+                            contact=firstCon+"<div id='telephonef"+i+"'><div style='display:block'>"+firstTel+"</div>拨号 </div><br>";
+                            contact=contact+secCon+"<div id='telephone"+i+"'><div style='display:block'>"+secTel+"</div>拨号 </div><br>";
+                        }else {         //1
+                            var oneCon=jsonData[i]["联系人"];
+                            var oneTel=telArray[oneCon];
+                            contact=oneCon+"<div id='telephone"+i+"'><div style='display:block'>"+oneTel+"</div>拨号 </div><br>";
+                        }
+
+                        var country;
+                        var city;
+                        if (jsonData[i]["地点"].indexOf("<br", 0) > 0) {
+                            country = jsonData[i]["地点"].substr(0, jsonData[i]["地点"].indexOf("<br", 0));
+                            city = jsonData[i]["地点"].substr(jsonData[i]["地点"].indexOf("<br", 0) + 4, jsonData[i]["地点"].length - jsonData[i]["地点"].indexOf("<br", 0) - 3);
+                        }
+                        else {
+                            country = jsonData[i]["地点"];
+                            city = "";
+                        }
+
+                        var html = placeListItem.innerHTML;
+                        var short;
+                        if (jsonData[i]["展会名称"].indexOf("<br", 0) > 0)
+                            short = jsonData[i]["展会名称"].substr(0, jsonData[i]["展会名称"].indexOf("<br", 0));
+                        else
+                            short = jsonData[i]["展会名称"];
+                        placeListItem.innerHTML = html + "<div class='tab-panel'" + "  id=" + " place" + i + "> <li id='placeli"+i+"' >" + short + "</li> <div id='placediv"+i+"' style='display: none;'> <dl> <dt>展会名称:</dt><dd>" + jsonData[i]["展会名称"] + "</dd> </dl> <dl> <dt>时间:</dt><dd>" + jsonData[i]["时间"] + "</dd> </dl> <dl> <dt>国家:</dt> <dd>" + country + "</dd> </dl> <dl> <dt>城市:</dt> <dd>" + city + "</dd> </dl> <dl> <dt>联系人:</dt> <dd>" + contact+ "</dd> </dl> </div> </div>";
+
+                    }
+                }
+            });
+        }else if(tname.substr(0,9)=="classlist")
+        {
+            var clickId = tname.substr(9, tname.length - 9);
+            var aimClass = classArray[clickId];
+            $.getJSON("data.json", function (jsonData) {
+                var placeListItem = document.getElementById('myTabContent');
+                placeListItem.innerHTML="";
+
+                for (i = 0; i < jsonData.length; i++) {
+                    if(jsonData[i]["类别"]==aimClass){
+                        contact="";
+                        if (jsonData[i]["联系人"].indexOf("<br", 0) > 0)   //2
+                        {
+                            var firstCon=jsonData[i]["联系人"].substr(0, jsonData[i]["联系人"].indexOf("<br", 0));
+                            var firstTel=telArray[firstCon];
+                            var secCon= jsonData[i]["联系人"].substr(jsonData[i]["联系人"].indexOf("<br", 0) + 4, jsonData[i]["联系人"].length - jsonData[i]["联系人"].indexOf("<br", 0) - 4);
+                            var secTel=telArray[secCon];
+                            contact=firstCon+"<div class='telephonef"+i+"'><div style='display:block'>"+firstTel+"</div>拨号 </div><br>";
+                            contact=contact+secCon+"<div class='telephone"+i+"'><div style='display:block'>"+secTel+"</div>拨号 </div><br>";
+                        }else {         //1
+                            var oneCon=jsonData[i]["联系人"];
+                            var oneTel=telArray[oneCon];
+                            contact=oneCon+"<div id='telephone"+i+"'><div style='display:block'>"+oneTel+"</div>拨号 </div><br>";
+                        }
+
+
+                        var country;
+                        var city;
+                        if (jsonData[i]["地点"].indexOf("<br", 0) > 0) {
+                            country = jsonData[i]["地点"].substr(0, jsonData[i]["地点"].indexOf("<br", 0));
+                            city = jsonData[i]["地点"].substr(jsonData[i]["地点"].indexOf("<br", 0) + 4, jsonData[i]["地点"].length - jsonData[i]["地点"].indexOf("<br", 0) - 3);
+                        }
+                        else {
+                            country = jsonData[i]["地点"];
+                            city = "";
+                        }
+
+                        var html = placeListItem.innerHTML;
+                        var short;
+                        if (jsonData[i]["展会名称"].indexOf("<br", 0) > 0)
+                            short = jsonData[i]["展会名称"].substr(0, jsonData[i]["展会名称"].indexOf("<br", 0));
+                        else
+                            short = jsonData[i]["展会名称"];
+                        placeListItem.innerHTML = html + "<div class='tab-panel'" + "  id=" + " place" + i + "> <li id='placeli"+i+"' >" + short + "</li> <div id='placediv"+i+"' style='display: none;'> <dl> <dt>展会名称:</dt><dd>" + jsonData[i]["展会名称"] + "</dd> </dl> <dl> <dt>时间:</dt><dd>" + jsonData[i]["时间"] + "</dd> </dl> <dl> <dt>国家:</dt> <dd>" + country + "</dd> </dl> <dl> <dt>城市:</dt> <dd>" + city + "</dd> </dl> <dl> <dt>联系人:</dt> <dd>" +contact+ "</dd> </dl> </div> </div>";
+
+                    }
+                }
+            });
+        }else if(tname.substr(0,7)=="placeli")
+        {
+            var clickId = tname.substr(7, tname.length - 7);
+//            alert(clickId);
+            if(openFlag==-1)
+            {
+                var div=document.getElementById("placediv"+clickId);
+                div.style.display="block";
+                openFlag=clickId;
+            }else if (openFlag==clickId)
+            {
+                var div=document.getElementById("placediv"+openFlag);
+                div.style.display="none";
+                openFlag=-1;
+            }
+            else
+            {
+                var div=document.getElementById("placediv"+openFlag);
+                div.style.display="none";
+                var div=document.getElementById("placediv"+clickId);
+                div.style.display="block";
+                openFlag=clickId;
+            }
+        }else if(tname.substr(0,10)=="telephonef")
+        {
+            var clickId = tname.substr(10, tname.length - 10);
+            var div=document.getElementById("telephonef"+clickId);
+            window.open("tel:" + (div.firstChild.innerHTML))
+        }else if(tname.substr(0,9)=="telephone"){
+            var clickId = tname.substr(9, tname.length - 9);
+            var div=document.getElementById("telephone"+clickId);
+            window.open("tel:" + (div.firstChild.innerHTML))
+            window.open("tel:" + (this.firstChild.innerHTML))
+        }
 
     }
 </script>
-<body>
 
+<body onclick="show_element(event)">
 <ul id="myTab" class="nav nav-tabs">
-    <li class="active dropdown">
-        <a href="#home" id="class" data-toggle="tab">类别</a>
+    <li class="dropdown" style="width: 33.3333%;">
+        <a href="#" id="class" class="dropdown-toggle" data-toggle="dropdown" style="background-color: #5cb85c;color: white">类别<b class="caret" ></b></a>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="class" id="classlist"></ul>
     </li>
-    <li class="dropdown">
-        <a href="#" id="date" class="dropdown-toggle" data-toggle="dropdown">时间<b class="caret"></b></a>
-        <ul class="dropdown-menu" role="menu" aria-labelledby="date" id="dateList"></ul>
+    <li class="dropdown" style="width: 33.3333%">
+        <a href="#" id="date" class="dropdown-toggle" data-toggle="dropdown" style="background-color: #337ab7;color: white">时间<b class="caret"></b></a>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="date" id="datelist"></ul>
     </li>
-    <li class="dropdown">
-        <a href="#" id="place" class="dropdown-toggle" data-toggle="dropdown">地点<b class="caret"></b></a>
-        <ul class="dropdown-menu" role="menu" aria-labelledby="place">
-            <li><a href="#jmeter" tabindex="-1" data-toggle="tab">jmeter</a></li>
-            <li><a href="#ejb" tabindex="-1" data-toggle="tab">ejb</a></li>
+    <li class="dropdown" style="width: 33.3333%">
+        <a href="#" id="place" class="dropdown-toggle" data-toggle="dropdown" style="background-color: #5bc0de;color: white">地点<b class="caret"></b></a>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="place" id="placelist">
         </ul>
     </li>
 </ul>
-
-<div id="testdiv"></div>
-
 <div id="myTabContent" class="tab-content">
-    <div class="tab-pane fade in active" id="home">
-        <p>菜鸟教程是一个提供最新的web技术站点，本站免费提供了建站相关的技术文档，帮助广大web技术爱好者快速入门并建立自己的网站。菜鸟先飞早入行——学的不仅是技术，更是梦想。</p>
-    </div>
-    <div class="tab-pane fade" id="ios">
-        <p>iOS 是一个由苹果公司开发和发布的手机操作系统。最初是于 2007 年首次发布 iPhone、iPod Touch 和 Apple
-            TV。iOS 派生自 OS X，它们共享 Darwin 基础。OS X 操作系统是用在苹果电脑上，iOS 是苹果的移动版本。</p>
-    </div>
-    <div class="tab-pane fade" id="jmeter">
-        <p>jMeter 是一款开源的测试软件。它是 100% 纯 Java 应用程序，用于负载和性能测试。</p>
-    </div>
-    <div class="tab-pane fade" id="ejb">
-        <p>Enterprise Java Beans（EJB）是一个创建高度可扩展性和强大企业级应用程序的开发架构，部署在兼容应用程序服务器（比如 JBOSS、Web Logic 等）的 J2EE 上。
-        </p>
-    </div>
 </div>
-
-
-
-<!--<div class="telephone">-->
-    <!--<div style="display:block">15566040155</div>-->
-    <!--一键拨号-->
-<!--</div>-->
-<script type="text/javascript">
-    $(function () {
-        $('.showCon li').click(function () {
-            eval("$('." + this.id + "').show();")
-        })
-        $('.telephone').click(function () {
-            window.open("tel:" + (this.firstChild.innerHTML))
-        })
-        $('.liName').click(function () {
-            if ((this.childNodes[1].src).indexOf("show") > -1) {
-                this.childNodes[1].src = "/bjhg/exhiapp/images/down.png";
-            } else {
-                this.childNodes[1].src = "/bjhg/exhiapp/images/show.png";
-            }
-            $(this).next().slideToggle();
-        })
-        $('.close').click(function () {
-            $('.fixedCon').hide();
-        })
-        $('.tab-box .tab-pane').on('click', function () {
-            var index = $(this).index();
-            $(this).addClass('on').siblings().removeClass('on');
-            $('.tab-con .tab-child').eq(index).show().siblings().hide();
-        })
-    })
-</script>
 </body>
 </html>
