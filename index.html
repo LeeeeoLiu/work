@@ -59,6 +59,7 @@
         background-color:#f1f1f1;
     }
     .tab-panel li{
+        font-size: 200%;
         height: 15%;
         background-color: #616975;
         background-image: -webkit-gradient(linear, left top, left bottom, from(rgb(114, 122, 134)),to(rgb(80, 88, 100)));
@@ -74,20 +75,29 @@
         box-shadow: inset 0px 1px 0px 0px #878e98;
         width: 100%;
         line-height: 300%;
-        text-indent: 2.75em;
+        /*text-indent: 2.75em;*/
         display: block;
         position: relative;
         font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
         font-weight: 600;
         color: #fff;
         text-shadow: 0px 1px 0px rgba(0,0,0,.5);
+        padding-right: 1em;
+        padding-left: 1em;
     }
 
+    .tab-panel dt{
+        font-size: 190%;
+    }
+
+    .tab-panel dd{
+        font-size: 190%;
+    }
     .tab-panel div{
         background: #fff;
-        border-bottom: 1px solid #efeff0;
+        /*border-bottom: 1px solid #efeff0;*/
         width: 100%;
-        line-height: 2.75em;
+        /*line-height: 2.75em;*/
         display: block;
         position: relative;
         font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -98,6 +108,21 @@
     .tab-content div:last-child{
         border-bottom: 1px solid #33373d;
     }
+    .telephone{
+        position: relative;
+        font-size: 100%;
+        background-color: #5cb85c;color: white
+    }
+    .telephone div{
+        font-size: 100%;
+        background-color: transparent;
+        /*color: #d9534f;*/
+        color: white;
+    }
+    .telephone img{
+        height: 80px;
+    }
+
 
 </style>
 <script>
@@ -152,7 +177,11 @@
                     classList.innerHTML = html + "<li><a href='#class" + i + "'id='classlist"+i+"' tabindex='-1' data-toggle='tab'>" + classArray[i] + "</a></li>"
                 }
                 isClassExist = 1;
+                openFlag=-1;
             }
+            var div=document.getElementById("placediv"+openFlag);
+            div.style.display="none";
+            openFlag=-1;
         })
 
         $("#date").click(function () {
@@ -163,7 +192,11 @@
                     dateList.innerHTML = html + "<li><a href='#month" + i + "'; id='monthlist"+i+"' tabindex='-1'; data-toggle='tab'>" + i + "月</a></li>"
                 }
                 isDateExist = 1;
+                openFlag=-1;
             }
+            var div=document.getElementById("placediv"+openFlag);
+            div.style.display="none";
+            openFlag=-1;
 
         })
 
@@ -176,6 +209,9 @@
                 }
                 isPlaceExist = 1;
             }
+            var div=document.getElementById("placediv"+openFlag);
+            div.style.display="none";
+            openFlag=-1;
         })
 
         $.getJSON("data.json", function (jsonData) {
@@ -192,6 +228,7 @@
                     country = jsonData[i]["地点"];
                     city = "";
                 }
+
                     contact="";
                     if (jsonData[i]["联系人"].indexOf("<br", 0) > 0)   //2
                     {
@@ -199,12 +236,12 @@
                         var firstTel=telArray[firstCon];
                         var secCon= jsonData[i]["联系人"].substr(jsonData[i]["联系人"].indexOf("<br", 0) + 4, jsonData[i]["联系人"].length - jsonData[i]["联系人"].indexOf("<br", 0) - 4);
                         var secTel=telArray[secCon];
-                        contact=firstCon+"<div id='telephonef"+i+"'><div style='display:block'>"+firstTel+"</div>拨号 </div><br>";
-                        contact=contact+secCon+"<div id='telephone"+i+"'><div style='display:block'>"+secTel+"</div>拨号 </div><br>";
+                        contact="<div>"+firstCon+"</div><button class='telephone' id='telephonef"+i+"'><img src='QQ20161231-0@2x.png' class='img-rounded' id='telimgf"+i+"'><div style='display:block' id='telephonenumf"+i+"'>"+firstTel+"</div>拨号 </button><br>";
+                        contact=contact+"<div>"+secCon+"</div><button class='telephone' id='telephone"+i+"'><img src='QQ20161231-0@2x.png' class='img-rounded' id='telimg"+i+"'><div style='display:block' id='telephonenum"+i+"'>"+secTel+"</div>拨号 </button><br>";
                     }else {         //1
                         var oneCon=jsonData[i]["联系人"];
                         var oneTel=telArray[oneCon];
-                        contact=oneCon+"<div id='telephone"+i+"'><div style='display:block'>"+oneTel+"</div>拨号 </div><br>";
+                        contact="<div>"+oneCon+"</div><button class='telephone' id='telephone"+i+"'><img src='QQ20161231-0@2x.png' class='img-rounded' id='telimg"+i+"'><div style='display:block' id='telephonenum"+i+"'>"+oneTel+"</div>拨号 </button><br>";
                     }
                     var html = placeListItem.innerHTML;
                     var short;
@@ -215,10 +252,6 @@
                     placeListItem.innerHTML = html + "<div class='tab-panel'" + "  id=" + " place" + i + "> <li id='placeli"+i+"' >" + short + "<br></li> <div id='placediv"+i+"' style='display: none;'> <dl> <dt>展会名称:</dt><dd>" + jsonData[i]["展会名称"] + "</dd> </dl> <dl> <dt>时间:</dt><dd>" + jsonData[i]["时间"] + "</dd> </dl> <dl> <dt>国家:</dt> <dd>" + country + "</dd> </dl> <dl> <dt>城市:</dt> <dd>" + city + "</dd> </dl> <dl> <dt>联系人:</dt> <dd>" +contact + "</dd> </dl> </div> </div>";
             }
         });
-        $("#placeli4").click(function(){
-            alert("sdfsdf");
-        });
-
 
     };
 </script>
@@ -259,14 +292,13 @@
                             var firstTel=telArray[firstCon];
                             var secCon= jsonData[i]["联系人"].substr(jsonData[i]["联系人"].indexOf("<br", 0) + 4, jsonData[i]["联系人"].length - jsonData[i]["联系人"].indexOf("<br", 0) - 4);
                             var secTel=telArray[secCon];
-                            contact=firstCon+"<div id='telephonef"+i+"'><div style='display:block'>"+firstTel+"</div>拨号 </div><br>";
-                            contact=contact+secCon+"<div id='telephone"+i+"'><div style='display:block'>"+secTel+"</div>拨号 </div><br>";
+                            contact="<div>"+firstCon+"</div><button class='telephone' id='telephonef"+i+"'><img src='QQ20161231-0@2x.png' class='img-rounded' id='telimgf"+i+"'><div style='display:block' id='telephonenumf"+i+"'>"+firstTel+"</div>拨号 </button><br>";
+                            contact=contact+"<div>"+secCon+"</div><button class='telephone' id='telephone"+i+"'><img src='QQ20161231-0@2x.png' class='img-rounded' id='telimg"+i+"'><div style='display:block' id='telephonenum"+i+"'>"+secTel+"</div>拨号 </button><br>";
                         }else {         //1
                             var oneCon=jsonData[i]["联系人"];
                             var oneTel=telArray[oneCon];
-                            contact=oneCon+"<div id='telephone"+i+"'><div style='display:block'>"+oneTel+"</div>拨号 </div><br>";
+                            contact="<div>"+oneCon+"</div><button class='telephone' id='telephone"+i+"'><img src='QQ20161231-0@2x.png' class='img-rounded' id='telimg"+i+"'><div style='display:block' id='telephonenum"+i+"'>"+oneTel+"</div>拨号 </button><br>";
                         }
-
                         var html = placeListItem.innerHTML;
                         var short;
                         if (jsonData[i]["展会名称"].indexOf("<br", 0) > 0)
@@ -296,12 +328,12 @@
                             var firstTel=telArray[firstCon];
                             var secCon= jsonData[i]["联系人"].substr(jsonData[i]["联系人"].indexOf("<br", 0) + 4, jsonData[i]["联系人"].length - jsonData[i]["联系人"].indexOf("<br", 0) - 4);
                             var secTel=telArray[secCon];
-                            contact=firstCon+"<div id='telephonef"+i+"'><div style='display:block'>"+firstTel+"</div>拨号 </div><br>";
-                            contact=contact+secCon+"<div id='telephone"+i+"'><div style='display:block'>"+secTel+"</div>拨号 </div><br>";
+                            contact="<div>"+firstCon+"</div><button class='telephone' id='telephonef"+i+"'><img src='QQ20161231-0@2x.png' class='img-rounded' id='telimgf"+i+"'><div style='display:block' id='telephonenumf"+i+"'>"+firstTel+"</div>拨号 </button><br>";
+                            contact=contact+"<div>"+secCon+"</div><button class='telephone' id='telephone"+i+"'><img src='QQ20161231-0@2x.png' class='img-rounded' id='telimg"+i+"'><div style='display:block' id='telephonenum"+i+"'>"+secTel+"</div>拨号 </button><br>";
                         }else {         //1
                             var oneCon=jsonData[i]["联系人"];
                             var oneTel=telArray[oneCon];
-                            contact=oneCon+"<div id='telephone"+i+"'><div style='display:block'>"+oneTel+"</div>拨号 </div><br>";
+                            contact="<div>"+oneCon+"</div><button class='telephone' id='telephone"+i+"'><img src='QQ20161231-0@2x.png' class='img-rounded' id='telimg"+i+"'><div style='display:block' id='telephonenum"+i+"'>"+oneTel+"</div>拨号 </button><br>";
                         }
 
                         var country;
@@ -343,14 +375,13 @@
                             var firstTel=telArray[firstCon];
                             var secCon= jsonData[i]["联系人"].substr(jsonData[i]["联系人"].indexOf("<br", 0) + 4, jsonData[i]["联系人"].length - jsonData[i]["联系人"].indexOf("<br", 0) - 4);
                             var secTel=telArray[secCon];
-                            contact=firstCon+"<div class='telephonef"+i+"'><div style='display:block'>"+firstTel+"</div>拨号 </div><br>";
-                            contact=contact+secCon+"<div class='telephone"+i+"'><div style='display:block'>"+secTel+"</div>拨号 </div><br>";
+                            contact="<div>"+firstCon+"</div><button class='telephone' id='telephonef"+i+"'><img src='QQ20161231-0@2x.png' class='img-rounded' id='telimgf"+i+"'><div style='display:block' id='telephonenumf"+i+"'>"+firstTel+"</div>拨号 </button><br>";
+                            contact=contact+"<div>"+secCon+"</div><button class='telephone' id='telephone"+i+"'><img src='QQ20161231-0@2x.png' class='img-rounded' id='telimg"+i+"'><div style='display:block' id='telephonenum"+i+"'>"+secTel+"</div>拨号 </button><br>";
                         }else {         //1
                             var oneCon=jsonData[i]["联系人"];
                             var oneTel=telArray[oneCon];
-                            contact=oneCon+"<div id='telephone"+i+"'><div style='display:block'>"+oneTel+"</div>拨号 </div><br>";
+                            contact="<div>"+oneCon+"</div><button class='telephone' id='telephone"+i+"'><img src='QQ20161231-0@2x.png' class='img-rounded' id='telimg"+i+"'><div style='display:block' id='telephonenum"+i+"'>"+oneTel+"</div>拨号 </button><br>";
                         }
-
 
                         var country;
                         var city;
@@ -408,6 +439,26 @@
             window.open("tel:" + (div.firstChild.innerHTML))
             window.open("tel:" + (this.firstChild.innerHTML))
         }
+        else if(tname.substr(0,13)=="telephonenumf")
+        {
+            var clickId = tname.substr(13, tname.length - 13);
+            var div=document.getElementById("telephonenumf"+clickId);
+            window.open("tel:" + (div.innerHTML))
+        }else if(tname.substr(0,12)=="telephonenum"){
+            var clickId = tname.substr(12, tname.length - 12);
+            var div=document.getElementById("telephonenum"+clickId);
+            window.open("tel:" + (div.innerHTML))
+        }
+        else if(tname.substr(0,7)=="telimgf")
+        {
+            var clickId = tname.substr(7, tname.length - 7);
+            var div=document.getElementById("telephonenumf"+clickId);
+            window.open("tel:" + (div.innerHTML))
+        }else if(tname.substr(0,6)=="telimg"){
+            var clickId = tname.substr(6, tname.length - 6);
+            var div=document.getElementById("telephonenum"+clickId);
+            window.open("tel:" + (div.innerHTML))
+        }
 
     }
 </script>
@@ -425,6 +476,7 @@
     <li class="dropdown" style="width: 33.3333%">
         <a href="#" id="place" class="dropdown-toggle" data-toggle="dropdown" style="background-color: #5bc0de;color: white">地点<b class="caret"></b></a>
         <ul class="dropdown-menu" role="menu" aria-labelledby="place" id="placelist">
+
         </ul>
     </li>
 </ul>
