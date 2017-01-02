@@ -5,6 +5,14 @@
     <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" id="viewport"
           name="viewport">
     <link rel="stylesheet" href="https://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./AdminLTE2 _ Buttons_files/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="./AdminLTE2 _ Buttons_files/ionicons.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="./AdminLTE2 _ Buttons_files/AdminLTE.min.css">
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="./AdminLTE 2 _ Buttons_files/_all-skins.min.css">
     <script src="https://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="application/javascript" src="fastclick.js"></script>
@@ -58,32 +66,28 @@
     body{
         background-color:#f1f1f1;
     }
+
+    .tab-panel{
+        border-top: 3px solid #d2d6de;
+        border-top-color: #c0c0c0;
+        margin-bottom: 5px;
+        border-radius: 3px;
+        background: #ffffff;
+        box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+    }
     .tab-panel li{
-        font-size: 200%;
+        font-size: 18px;
+        font-weight: 500;
         height: 15%;
-        background-color: #616975;
-        background-image: -webkit-gradient(linear, left top, left bottom, from(rgb(114, 122, 134)),to(rgb(80, 88, 100)));
-        background-image: -webkit-linear-gradient(top, rgb(114, 122, 134), rgb(80, 88, 100));
-        background-image: -moz-linear-gradient(top, rgb(114, 122, 134), rgb(80, 88, 100));
-        background-image: -o-linear-gradient(top, rgb(114, 122, 134), rgb(80, 88, 100));
-        background-image: -ms-linear-gradient(top, rgb(114, 122, 134), rgb(80, 88, 100));
-        background-image: linear-gradient(top, rgb(114, 122, 134), rgb(80, 88, 100));
-        filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='#727a86', EndColorStr='#505864');
-        border-bottom: 1px solid #33373d;
-        -webkit-box-shadow: inset 0px 1px 0px 0px #878e98;
-        -moz-box-shadow: inset 0px 1px 0px 0px #878e98;
-        box-shadow: inset 0px 1px 0px 0px #878e98;
         width: 100%;
-        line-height: 300%;
-        /*text-indent: 2.75em;*/
+        line-height: 1;
         display: block;
         position: relative;
-        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-        font-weight: 600;
-        color: #fff;
-        text-shadow: 0px 1px 0px rgba(0,0,0,.5);
-        padding-right: 1em;
-        padding-left: 1em;
+        color: black;
+        padding: 10px;
+        margin:0;
+        background-color: white;
+        border-bottom: 1px solid #f4f4f4;
     }
 
     .tab-panel dt{
@@ -123,6 +127,21 @@
         height: 80px;
     }
 
+    .btn-group{
+        width: 100%;
+    }
+
+    .btn_title {
+        color: #ffffff;
+        height: 70px;
+        width: 100%;
+        font-size: 220%;
+    }
+    .btn-info.active, .btn-info:active, .dropdown-toggle.btn-info {
+        color: #fff;
+        background-color: #87CEFA;
+        border-color: transparent;
+    }
 
 </style>
 <script>
@@ -462,22 +481,25 @@
 
     }
 </script>
-
 <body onclick="show_element(event)">
 <ul id="myTab" class="nav nav-tabs">
     <li class="dropdown" style="width: 33.3333%;">
-        <a href="#" id="class" class="dropdown-toggle" data-toggle="dropdown" style="background-color: #5cb85c;color: white">类别<b class="caret" ></b></a>
-        <ul class="dropdown-menu" role="menu" aria-labelledby="class" id="classlist"></ul>
+        <div class="btn-group">
+            <button id="class" class="btn btn-info btn_title dropdown-toggle btn_title" data-toggle="dropdown" style="background-color: #87CEFA;border-color: transparent;border-radius: 10%;">类别</button>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="class" id="classlist"></ul>
+        </div>
     </li>
     <li class="dropdown" style="width: 33.3333%">
-        <a href="#" id="date" class="dropdown-toggle" data-toggle="dropdown" style="background-color: #337ab7;color: white">时间<b class="caret"></b></a>
-        <ul class="dropdown-menu" role="menu" aria-labelledby="date" id="datelist"></ul>
+        <div class="btn-group">
+            <button id="date" class="dropdown-toggle btn btn-info btn_title" data-toggle="dropdown" style="background-color: #87CEEB;border-color: transparent;border-radius: 10%;">时间</button>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="date" id="datelist"></ul>
+        </div>
     </li>
     <li class="dropdown" style="width: 33.3333%">
-        <a href="#" id="place" class="dropdown-toggle" data-toggle="dropdown" style="background-color: #5bc0de;color: white">地点<b class="caret"></b></a>
-        <ul class="dropdown-menu" role="menu" aria-labelledby="place" id="placelist">
-
-        </ul>
+        <div class="btn-group">
+            <button id="place" class="dropdown-toggle btn btn-info btn_title" data-toggle="dropdown" style="background-color: #ADD8E6;border-color: transparent;border-radius: 10%;">地点</button>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="place" id="placelist"></ul>
+        </div>
     </li>
 </ul>
 <div id="myTabContent" class="tab-content">
