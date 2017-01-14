@@ -1,0 +1,177 @@
+@charset "utf-8";
+html,body{
+    height:100%;
+}
+.wrap{
+    width:100%;
+    max-width:450px;
+    margin:auto;
+    height:100%;
+    background: url("../images/bg.png") fixed;
+    background-size:100% 100%;
+    overflow:auto;
+    position:relative;
+}
+.tab-box{
+    padding:10px 15px;
+    padding-top:20px;
+}
+.tab-box .tab-pane{
+    width:33.3%;
+    float:left;
+}
+.tab-pane span{
+    display:inline-block;
+    width:90%;
+    background:rgba(255,255,255,0.5);
+    text-align:center;
+    -webkit-border-radius:3px;
+    -moz-border-radius:3px;
+    border-radius:3px;
+    padding:20px 0;
+    color:#54a2ae;
+    font-size:18px;
+}
+.tab-con{
+    padding: 0 15px;
+}
+.tab-child{
+    width:100%;
+}
+.tab-child>ul>li{
+    margin-bottom:5px;
+}
+.showCon{
+    margin-top:5px;
+    display:none;
+}
+.liName,.showCon li{
+    padding:10px 0;
+    text-align:center;
+    border-radius:3px;
+    border:1px solid #fff;
+    font-size:18px;
+    /*color:#fff;*/
+    background: rgba(255,255,255,0.2);
+    position:relative;
+}
+.showCon li a{
+    padding:3px 30px;
+    font-size:14px;
+    /*color:#fff;*/
+    overflow: hidden;  /*溢出隐藏*/
+    text-overflow: ellipsis; /*以省略号...显示*/
+    white-space: nowrap;  /*强制不换行*/
+    display:block;
+
+}
+.showCon li{
+    background:none;
+    margin-bottom:10px;
+}
+.liName img{
+    width:19px;
+    position:absolute;
+    right:10px;
+    top:50%;
+    margin-top:-10px;
+}
+.more{
+    position:absolute;
+    right:15px;
+    width:8px;
+}
+.tab-child>ul>li:nth-child(2) .liName{
+    background: rgba(179,251,175,0.2);
+}
+.tab-child>ul>li:nth-child(3) .liName{
+    background: rgba(175,236,251,0.3);
+}
+.tab-child>ul>li:nth-child(4) .liName{
+    background: rgba(255,255,255,0.3);
+}
+.tab-child>ul>li:nth-child(5) .liName{
+    background: rgba(255,255,255,0.2);
+}
+.tab-child>ul>li:nth-child(6) .liName{
+    background: rgba(179,251,175,0.2);
+}
+.tab-child>ul>li:nth-child(7) .liName{
+    background: rgba(175,236,251,0.3);
+}
+.tab-child>ul>li:nth-child(8) .liName{
+    background: rgba(255,255,255,0.3);
+}
+.tab-child>ul>li:nth-child(9) .liName{
+    background: rgba(255,255,255,0.2);
+}
+.tab-child>ul>li:nth-child(10) .liName{
+    background: rgba(179,251,175,0.2);
+}
+.tab-child>ul>li:nth-child(11) .liName{
+    background: rgba(175,236,251,0.3);
+}
+.tab-child>ul>li:nth-child(12) .liName{
+    background: rgba(255,255,255,0.2);
+}
+.fixedCon{
+    right:5%;
+    left:5%;
+    background:url("../images/fixedBg.png") no-repeat;
+    background-size:100% 100%;
+    position:absolute;
+    top:10%;
+    z-index:99999;
+    bottom:10%;
+}
+.content{
+    padding:20px 15px;
+}
+.title{
+    font-size:20px;
+    /*color:#fff;*/
+    line-height:30px;
+    text-align:center;
+    padding-bottom:10px;
+    border-bottom:1px solid #fff;
+    margin-bottom:15px;
+}
+.content dl{
+    margin-bottom:5px;
+}
+.content dl dt{
+    width:85px;
+    float:left;
+    /*color:#fff;*/
+    text-align:right;
+    line-height:30px;
+}
+.content dl dd{
+    padding-left:100px;
+    line-height:30px;
+    /*color:#fff;*/
+}
+.telephone{
+    border-radius:5px;
+    background:rgba(255,255,255,0.3);
+    /*color:#fff;*/
+    padding:10px 0;
+    text-align:center;
+}
+.telephone img{
+    padding-right:20px;
+    width:50px;
+    vertical-align: middle;
+}
+.close{
+    position:absolute;
+    right:10px;
+    top:20px;
+    width:30px;
+}
+.tab-box .on span{
+    /*color:#fff;*/
+}
+.tab-con{
+    padding-bottom:20px;
+}

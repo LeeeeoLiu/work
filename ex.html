@@ -15,8 +15,6 @@
     <link rel="stylesheet" href="framework7.ios.colors.min.css">
     <link rel="stylesheet" href="framework7-icons.css">
     <link rel="stylesheet" href="kitchen-sink.css">
-    <link rel="icon" href="http://framework7.io/kitchen-sink-ios/img/icon.png">
-    <link rel="apple-touch-icon" href="http://framework7.io/kitchen-sink-ios/img/icon.png">
     <link rel="stylesheet" href="reset.css" type="text/css">
     <link rel="stylesheet" href="thems.css" type="text/css">
     <link rel="stylesheet" href="responsive.css" type="text/css">
@@ -39,7 +37,7 @@
             "王克任": "0532-83892372",
             "郑伟": "0532-83897595"
         };
-        var monthArray = ["1月","2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"];
+        var monthArray = ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"];
         window.onload = function () {
             $.getJSON("data.json", function (jsonData) {
                 for (i = 0; i < jsonData.length; i++) {
@@ -67,7 +65,7 @@
                                 short = jsonData[j]["展会名称"].substr(0, jsonData[j]["展会名称"].indexOf("<br", 0));
                             else
                                 short = jsonData[j]["展会名称"];
-                            var itemContent = "<div class='accordion-item-content'> <div class='content-block'><p onclick=display(this.id) id='"+i+"To"+j+"'><a href='javascript:void(0);'>" + short + "</a></p></div></div>"
+                            var itemContent = "<div class='accordion-item-content'> <div class='content-block'><p onclick=display(this.id) id='" + i + "To" + j + "'><a href='javascript:void(0);'>" + short + "</a></p></div></div>"
                             html = html + itemContent;
                         }
                     }
@@ -87,6 +85,14 @@
                     for (j = 0; j < jsonData.length; j++) {
                         if (monthArray[i] == jsonData[j]["时间"].substr(0,2)) {
                             console.log(monthArray[i]);
+                            var short;
+                            if (jsonData[j]["展会名称"].indexOf("<br", 0) > 0)
+                                short = jsonData[j]["展会名称"].substr(0, jsonData[j]["展会名称"].indexOf("<br", 0));
+                            else
+                                short = jsonData[j]["展会名称"];
+                            var itemContent = "<div class='accordion-item-content'> <div class='content-block'><p onclick=display(this.id) id='"+i+"To"+j+"'><a href='javascript:void(0);'>" + short + "</a></p></div></div>"
+                            html = html + itemContent;
+                        }else if(monthArray[i] == jsonData[j]["时间"].substr(0,3)){
                             var short;
                             if (jsonData[j]["展会名称"].indexOf("<br", 0) > 0)
                                 short = jsonData[j]["展会名称"].substr(0, jsonData[j]["展会名称"].indexOf("<br", 0));
@@ -148,7 +154,7 @@
                                 short = jsonData[j]["展会名称"].substr(0, jsonData[j]["展会名称"].indexOf("<br", 0));
                             else
                                 short = jsonData[j]["展会名称"];
-                            var itemContent = "<div class='accordion-item-content'> <div class='content-block'><p onclick=display(this.id) id='"+i+"To"+j+"'><a href='javascript:void(0);'>" + short + "</a></p></div></div>"
+                            var itemContent = "<div class='accordion-item-content'> <div class='content-block'><p onclick=display(this.id) id='" + i + "To" + j + "'><a href='javascript:void(0);'>" + short + "</a></p></div></div>"
                             html = html + itemContent;
                         }
                     }
@@ -190,14 +196,16 @@
         margin-top: 2px;
         margin-bottom: 2px;
     }
-    .telephone{
+
+    .telephone {
         position: relative;
         font-size: 100%;
         /*background-color: #5cb85c;color: white*/
         color: black;
         padding: 0;
     }
-    .telephone div{
+
+    .telephone div {
         font-size: 100%;
         background-color: transparent;
         /*color: #d9534f;*/
@@ -207,15 +215,15 @@
         border-bottom: 2px solid green;
     }
 </style>
-<body class="framework7-root" onclick="show_element(event)">
+<body class="framework7-root" onclick="show_element(event)" style="line-height: 2">
 <div class="navbar">
     <div class="navbar-inner">
         <div class="left"></div>
-        <div class="center">
+        <div class="center" style="width:100%;">
             <!-- 导航栏中的按键排控制器 -->
-            <div class="buttons-row">
+            <div class="buttons-row" style="width:100%;">
                 <!-- 关联到第一个tab的链接，默认激活 -->
-                <a href="#tab1" class="tab-link active button">类别</a>
+                <a href="#tab1" class="tab-link active button" >类别</a>
                 <!-- 关联到第二个tab的链接 -->
                 <a href="#tab2" class="tab-link button">时间</a>
                 <!-- 关联到第三个tab的链接 -->
